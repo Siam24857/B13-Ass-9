@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
+import Link from 'next/link';
 
 const Allrooms = ({da}) => {
     const {
@@ -67,7 +68,7 @@ const Allrooms = ({da}) => {
             
                       <div>
                         <h3 className="text-3xl font-bold text-orange-400">
-                          {rate}
+                          ${rate}/hr
                         </h3>
             
                         <p className="text-gray-400 text-sm">
@@ -75,9 +76,11 @@ const Allrooms = ({da}) => {
                         </p>
                       </div>
             
-                      <button className="bg-orange-500 hover:bg-orange-600 transition-all duration-300 text-white px-6 py-3 rounded-xl font-semibold">
-                         Veiw dettails
-                      </button>
+                      <Link href={`/roomdettails/${da._id}`}>
+                        <button className="bg-orange-500 hover:bg-orange-600 transition-all duration-300 text-white px-6 py-3 rounded-xl font-semibold">
+                           Veiw dettails
+                        </button>
+                      </Link>
             
                     </div>
                   </div>

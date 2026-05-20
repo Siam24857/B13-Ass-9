@@ -29,7 +29,7 @@ export default function Navbar() {
           <Link href="/">Home</Link>
           <Link href="/rooms">Rooms</Link>
           <Link href="/add-room">Add Room</Link>
-          <Link href="/my-listings">My Listings</Link>
+          <Link href="/my-listroom">My Listings</Link>
           <Link href="/my-bookings">My Bookings</Link>
         </div>
 
