@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { API_URL } from "../lib/config";
 
 export default function MyBookings() {
   const [bookings, setBookings] = useState([]);
@@ -11,7 +12,7 @@ export default function MyBookings() {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const res = await fetch("http://localhost:5000/bookings");
+        const res = await fetch(`${API_URL}/bookings`);
         const data = await res.json();
         setBookings(data);
       } catch (error) {

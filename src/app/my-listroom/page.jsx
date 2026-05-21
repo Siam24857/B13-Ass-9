@@ -2,6 +2,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { auth } from "../lib/auth";
 import Alllistindrooms from "./Alllistindrooms";
+import { API_URL } from "../lib/config";
 
 export default async function MyListingsCard() {
   const session = await auth.api.getSession({
@@ -31,7 +32,7 @@ export default async function MyListingsCard() {
   let data = [];
   try {
     const res = await fetch(
-      "http://localhost:5000/listed-room",
+      `${API_URL}/listed-room`,
       {
         headers: {
           Authorization: `Bearer ${token}`

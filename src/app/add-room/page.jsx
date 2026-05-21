@@ -3,6 +3,7 @@ import React from "react";
 import { Button, Input, Label, TextArea, TextField } from "@heroui/react";
 import { toast } from "react-toastify";
 import { authClient } from "../lib/auth-client";
+import { API_URL } from "../lib/config";
 
 const page = () => {
   const onsubmit = async (e) => {
@@ -28,7 +29,7 @@ const page = () => {
       const tokenRes = await authClient.token();
       const token = tokenRes?.data?.token;
 
-      const res1 = await fetch("http://localhost:5000/add-rooms", {
+      const res1 = await fetch(`${API_URL}/add-rooms`, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
@@ -37,7 +38,7 @@ const page = () => {
         body: JSON.stringify(finalData),
       });
 
-      const res2 = await fetch("http://localhost:5000/listed-room-add", {
+      const res2 = await fetch(`${API_URL}/listed-room-add`, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",

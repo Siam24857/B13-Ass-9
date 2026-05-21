@@ -3,6 +3,7 @@
 import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import Allrooms from "./Allrooms";
+import { API_URL } from "../lib/config";
 
 export default function StudyRoomSearch() {
   const [data, setData] = useState([]);
@@ -18,8 +19,8 @@ export default function StudyRoomSearch() {
   // Fetch Rooms
   useEffect(() => {
     const url = selectedAmenity
-      ? `http://localhost:5000/rooms/${selectedAmenity}`
-      : "http://localhost:5000/rooms";
+      ? `${API_URL}/rooms/${selectedAmenity}`
+      : `${API_URL}/rooms`;
 
     fetch(url)
       .then((res) => res.json())

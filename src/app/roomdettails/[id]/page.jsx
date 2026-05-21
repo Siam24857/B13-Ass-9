@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import BookingModal from "@/app/components/Bookinfmodal";
+import { API_URL } from "@/app/lib/config";
 
 export default function RoomDetails() {
 
@@ -34,7 +35,7 @@ export default function RoomDetails() {
       try {
 
         const res = await fetch(
-          `http://localhost:5000/roomdetails/${id}`
+          `${API_URL}/roomdetails/${id}`
         );
 
         // যদি error হয়

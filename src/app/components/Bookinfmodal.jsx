@@ -4,6 +4,8 @@ import { useMemo, useState } from "react";
 import { X } from "lucide-react";
 import { toast } from "react-toastify";
 
+import { API_URL } from "../lib/config";
+
 export default function RoomBookingModal({ room }) {
   const [openModal, setOpenModal] = useState(false);
 
@@ -83,7 +85,7 @@ export default function RoomBookingModal({ room }) {
 };
 
     try {
-      const res = await fetch("http://localhost:5000/bookings", {
+      const res = await fetch(`${API_URL}/bookings`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

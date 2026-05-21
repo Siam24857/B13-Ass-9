@@ -4,6 +4,8 @@ import Somecouerse from "./components/Somecouerse";
 import Feature from "./components/Feature";
 import Howwoeks from "./components/Howwoeks";
 
+export const dynamic = "force-dynamic";
+
 export default function Home() {
   return (
     <div>
@@ -14,3 +16,4 @@ export default function Home() {
     </div>
   );
 }
+
