@@ -3,7 +3,7 @@ import Fewcourse from './Fewcourse';
 import { API_URL } from '@/app/lib/config';
 
 const Somecouerse = async() => {
-    const res = await fetch(`${API_URL}/home`)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home`)
     const data = await res.json()
     console.log(data)
     return (

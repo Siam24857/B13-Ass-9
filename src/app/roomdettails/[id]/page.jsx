@@ -35,7 +35,7 @@ export default function RoomDetails() {
       try {
 
         const res = await fetch(
-          `${API_URL}/roomdetails/${id}`
+          `${process.env.NEXT_PUBLIC_API_URL}/roomdetails/${id}`
         );
 
         // যদি error হয়

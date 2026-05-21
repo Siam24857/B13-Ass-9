@@ -32,7 +32,7 @@ export default async function MyListingsCard() {
   let data = [];
   try {
     const res = await fetch(
-      `${API_URL}/listed-room`,
+      `${process.env.NEXT_PUBLIC_API_URL}/listed-room`,
       // {
       //   headers: {
       //     Authorization: `Bearer ${token}`

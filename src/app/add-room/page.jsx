@@ -29,7 +29,7 @@ const page = () => {
       // const tokenRes = await authClient.token();
       // const token = tokenRes?.data?.token;
 
-      const res1 = await fetch(`${API_URL}/add-rooms`, {
+      const res1 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/add-rooms`, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
@@ -38,7 +38,7 @@ const page = () => {
         body: JSON.stringify(finalData),
       });
 
-      const res2 = await fetch(`${API_URL}/listed-room-add`, {
+      const res2 = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/listed-room-add`, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",

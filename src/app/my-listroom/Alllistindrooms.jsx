@@ -26,7 +26,7 @@ const Alllistindrooms = ({ da, token }) => {
     //    activeToken = tokenRes?.data?.token;
     //   }
        
-      const res = await fetch(`${API_URL}/listed/${_id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/listed/${_id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

@@ -12,7 +12,7 @@ export default function MyBookings() {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const res = await fetch(`${API_URL}/bookings`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookings`);
         const data = await res.json();
         setBookings(data);
       } catch (error) {

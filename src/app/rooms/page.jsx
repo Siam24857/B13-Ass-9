@@ -19,8 +19,8 @@ export default function StudyRoomSearch() {
   // Fetch Rooms
   useEffect(() => {
     const url = selectedAmenity
-      ? `${API_URL}/rooms/${selectedAmenity}`
-      : `${API_URL}/rooms`;
+      ? `${process.env.NEXT_PUBLIC_API_URL}/rooms/${selectedAmenity}`
+      : `${process.env.NEXT_PUBLIC_API_URL}/rooms`;
 
     fetch(url)
       .then((res) => res.json())
