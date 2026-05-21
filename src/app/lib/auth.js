@@ -13,8 +13,18 @@ if (!global._mongoClientPromise) {
 const client = await global._mongoClientPromise;
 const db = client.db("user");
 
+const getBetterAuthURL = () => {
+  if (process.env.BETTER_AUTH_URL) {
+    return process.env.BETTER_AUTH_URL;
+  }
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+  return "http://localhost:3000";
+};
+
 export const auth = betterAuth({
-  baseURL: process.env.BETTER_AUTH_URL,
+  baseURL: getBetterAuthURL(),
 
   database: mongodbAdapter(db),
 

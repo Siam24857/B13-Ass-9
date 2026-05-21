@@ -29,7 +29,7 @@ export default function Loginpage() {
       email: email,
       password: password,
       rememberMe: true,
-      callbackURL: "http://localhost:3000",
+      callbackURL: "/",
     });
 
     if (data) {
@@ -54,7 +54,7 @@ export default function Loginpage() {
     try {
       await authClient.signIn.social({
         provider: "google",
-        callbackURL: "http://localhost:3000",
+        callbackURL: "/",
       });
     } catch (error) {
       toast.error("Google login failed. Please try again.", {
