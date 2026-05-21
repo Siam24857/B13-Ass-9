@@ -1,13 +1,16 @@
 import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { jwt } from "better-auth/plugins";
- 
 import { MongoClient } from "mongodb";
 
-const client = new MongoClient(process.env.MONGO_URI);
+const uri = process.env.MONGO_URI;
 
-await client.connect();
+if (!global._mongoClientPromise) {
+  const client = new MongoClient(uri);
+  global._mongoClientPromise = client.connect();
+}
 
+const client = await global._mongoClientPromise;
 const db = client.db("user");
 
 export const auth = betterAuth({
@@ -18,21 +21,20 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
- session:{
-   cookieCache:{
-    enabled: true,
-    strategy: 'jwt',
-    maxAge: 7 * 24 * 60 * 60
-   }
+
+  session: {
+    cookieCache: {
+      enabled: true,
+      maxAge: 7 * 24 * 60 * 60,
+    },
   },
-  plugins:[
-    jwt()
-  ],
+
+  plugins: [jwt()],
+
   socialProviders: {
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     },
   },
- 
 });
