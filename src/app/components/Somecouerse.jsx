@@ -2,10 +2,19 @@ import React from 'react';
 import Fewcourse from './Fewcourse';
 import { API_URL } from '@/app/lib/config';
 
-const Somecouerse = async() => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home`)
-    const data = await res.json()
-    console.log(data)
+export const dynamic = 'force-dynamic';
+
+const Somecouerse = async () => {
+    let data = [];
+    try {
+      const res = await fetch(`${API_URL}/home`, { cache: 'no-store' });
+      if (res.ok) {
+        data = await res.json();
+      }
+    } catch (err) {
+      console.error('Failed to load home rooms:', err);
+    }
+
     return (
         <div className='bg-[#071320] '>
         <div className='  p-12 space-y-3'>

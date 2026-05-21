@@ -45,12 +45,12 @@ const Fewcourse = ({da}) => {
         </div>
  
         <p className="text-gray-300 mt-5 leading-relaxed">
-          {description.slice(0, 90)}...
+          {description ? `${description.slice(0, 90)}...` : "No description"}
         </p>
 
         {/* Amenities */}
         <div className="flex flex-wrap gap-2 mt-5">
-          {amenities.map((item, index) => (
+          {(amenities || []).map((item, index) => (
             <span
               key={index}
               className="bg-orange-950/40 text-orange-400 border border-orange-500/20 px-3 py-1 rounded-full text-xs font-semibold"

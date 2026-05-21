@@ -2,13 +2,24 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Moon, ChevronDown, BookOpen } from "lucide-react";
+import { Moon, BookOpen } from "lucide-react";
 import { authClient, useSession } from "../lib/auth-client";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
- const { data: session } = useSession();
+  const { data: session } = useSession();
+  const pathname = usePathname();
 
- const user = session?.user
+  const user = session?.user;
+
+  const navLinks = [
+    { name: "Home", path: "/" },
+    { name: "Rooms", path: "/rooms" },
+    { name: "Add Room", path: "/add-room" },
+    { name: "My Listings", path: "/my-listroom" },
+    { name: "My Bookings", path: "/my-bookings" },
+  ];
+
   return (
     <nav className="w-full border-b border-[#1b2a3a] bg-[#08111f] text-white">
       <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-6">
@@ -26,19 +37,37 @@ export default function Navbar() {
 
         {/* CENTER MENU */}
         <div className="hidden items-center gap-10 md:flex">
-          <Link href="/">Home</Link>
-          <Link href="/rooms">Rooms</Link>
-          <Link href="/add-room">Add Room</Link>
-          <Link href="/my-listroom">My Listings</Link>
-          <Link href="/my-bookings">My Bookings</Link>
+          {navLinks.map((link) => (
+            <Link
+              key={link.path}
+              href={link.path}
+              className={`group relative pb-1 text-[15px] font-medium transition-all duration-300
+                ${
+                  pathname === link.path
+                    ? "text-yellow-400"
+                    : "text-gray-300 hover:text-yellow-300"
+                }`}
+            >
+              {link.name}
+
+              {/* Animated Underline */}
+              <span
+                className={`absolute left-0 bottom-0 h-[2px] bg-yellow-400 transition-all duration-300
+                  ${
+                    pathname === link.path
+                      ? "w-full"
+                      : "w-0 group-hover:w-full"
+                  }`}
+              ></span>
+            </Link>
+          ))}
         </div>
 
         {/* RIGHT SIDE */}
         <div className="flex items-center gap-6">
 
-          <button className="rounded-full p-2 hover:bg-[#132235]">
-            <Moon className="h-5 w-5 text-gray-300" />
-          </button>
+          {/* Theme Button */}
+          
 
           {/* USER */}
           {user ? (
@@ -53,19 +82,23 @@ export default function Navbar() {
                 className="h-11 w-11 rounded-full border-2 border-yellow-400 object-cover"
               />
 
-              <div className="hidden md:flex items-center gap-1">
+              <div className="hidden items-center gap-1 md:flex">
                 <span className="text-[16px] font-semibold">
                   {user.name}
                 </span>
-
-              
               </div>
-              <button onClick={async() => await authClient.signOut()} className="font-semibold text-yellow-400 hover:underline btn btn-active">Log Out</button>
+
+              <button
+                onClick={async () => await authClient.signOut()}
+                className="rounded-lg border border-yellow-400 px-4 py-2 font-semibold text-yellow-400 transition hover:bg-yellow-400 hover:text-black"
+              >
+                Log Out
+              </button>
             </div>
           ) : (
             <Link
               href="/login"
-              className="font-semibold text-yellow-400 hover:underline btn btn-active"
+              className="rounded-lg border border-yellow-400 px-4 py-2 font-semibold text-yellow-400 transition hover:bg-yellow-400 hover:text-black"
             >
               Login
             </Link>

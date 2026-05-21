@@ -6,6 +6,11 @@ import { toast } from "react-toastify";
 
 import { API_URL } from "../lib/config";
 
+const TIME_SLOTS = Array.from({ length: 13 }, (_, i) => {
+  const hour = i + 8;
+  return `${hour.toString().padStart(2, "0")}:00`;
+});
+
 export default function RoomBookingModal({ room }) {
   const [openModal, setOpenModal] = useState(false);
 
@@ -17,17 +22,11 @@ export default function RoomBookingModal({ room }) {
   // Convert "$11/hr" => 11
   const hourlyRate = Number(room?.rate?.replace(/[^0-9]/g, ""));
 
-  // Time Slots
-  const timeSlots = Array.from({ length: 13 }, (_, i) => {
-    const hour = i + 8;
-    return `${hour.toString().padStart(2, "0")}:00`;
-  });
-
   // End Time Options
   const endTimeOptions = useMemo(() => {
     if (!startTime) return [];
-    const startIndex = timeSlots.indexOf(startTime);
-    return timeSlots.filter((_, index) => index > startIndex);
+    const startIndex = TIME_SLOTS.indexOf(startTime);
+    return TIME_SLOTS.filter((_, index) => index > startIndex);
   }, [startTime]);
 
   // Total Cost
@@ -170,7 +169,7 @@ export default function RoomBookingModal({ room }) {
               className="w-full mb-5 rounded-xl border border-white/10 bg-[#101D31] px-4 py-3 text-white"
             >
               <option value="">Select start time</option>
-              {timeSlots.map((time) => (
+              {TIME_SLOTS.map((time) => (
                 <option key={time} value={time}>
                   {time}
                 </option>

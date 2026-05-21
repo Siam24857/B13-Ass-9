@@ -1,25 +1,35 @@
-
-import { auth } from "@/app/lib/auth";
+import { getAuth } from "@/app/lib/auth";
 import { toNextJsHandler } from "better-auth/next-js";
 
-const { GET: authGet, POST: authPost } = toNextJsHandler(auth);
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
+let handlersPromise = null;
+
+async function getHandlers() {
+  if (!handlersPromise) {
+    handlersPromise = getAuth().then((auth) => toNextJsHandler(auth));
+  }
+  return handlersPromise;
+}
 
 function sanitizeCookieHeader(cookieHeader) {
   if (!cookieHeader) return "";
   return cookieHeader
     .split("; ")
-    .filter(cookie => {
+    .filter((cookie) => {
       const parts = cookie.split("=");
       const name = parts[0];
       const value = parts.slice(1).join("=");
-      
-      // Match better-auth session_data or account_data cookies (including chunked and secure versions)
-      const isAuthDataCookie = /^(?:__Secure-|__Host-)?better-auth\.(?:session_data|account_data)(?:\.\d+)?$/.test(name);
-      
+
+      const isAuthDataCookie =
+        /^(?:__Secure-|__Host-)?better-auth\.(?:session_data|account_data)(?:\.\d+)?$/.test(
+          name
+        );
+
       if (isAuthDataCookie) {
-        // Base64URL encoding used for compact session/account data must strictly contain [A-Za-z0-9_-]
         if (value && !/^[A-Za-z0-9_-]+$/.test(value)) {
-          return false; // Drop malformed or incompatible cookie
+          return false;
         }
       }
       return true;
@@ -27,8 +37,7 @@ function sanitizeCookieHeader(cookieHeader) {
     .join("; ");
 }
 
-export async function GET(request) {
-  // Sanitize headers to remove any non-standard/Symbol keys
+function buildCleanRequest(request, includeBody = false) {
   const newHeaders = {};
   request.headers.forEach((value, key) => {
     if (key.toLowerCase() === "cookie") {
@@ -37,32 +46,26 @@ export async function GET(request) {
       newHeaders[key] = value;
     }
   });
-  
-  const cleanRequest = new Request(request.url, {
+
+  const init = {
     method: request.method,
     headers: newHeaders,
-  });
-  
-  return authGet(cleanRequest);
+  };
+
+  if (includeBody && request.body) {
+    init.body = request.body;
+    init.duplex = "half";
+  }
+
+  return new Request(request.url, init);
+}
+
+export async function GET(request) {
+  const { GET: authGet } = await getHandlers();
+  return authGet(buildCleanRequest(request));
 }
 
 export async function POST(request) {
-  // Sanitize headers to remove any non-standard/Symbol keys
-  const newHeaders = {};
-  request.headers.forEach((value, key) => {
-    if (key.toLowerCase() === "cookie") {
-      newHeaders[key] = sanitizeCookieHeader(value);
-    } else {
-      newHeaders[key] = value;
-    }
-  });
-  
-  const cleanRequest = new Request(request.url, {
-    method: request.method,
-    headers: newHeaders,
-    body: request.body,
-    duplex: 'half',
-  });
-  
-  return authPost(cleanRequest);
+  const { POST: authPost } = await getHandlers();
+  return authPost(buildCleanRequest(request, true));
 }

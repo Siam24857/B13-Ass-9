@@ -1,12 +1,14 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { auth } from "../lib/auth";
+import { getAuth } from "../lib/auth";
 import Alllistindrooms from "./Alllistindrooms";
-import { API_URL } from "../lib/config";
+
+export const dynamic = "force-dynamic";
 
 export default async function MyListingsCard() {
+  const auth = await getAuth();
   const session = await auth.api.getSession({
-    headers: await headers()
+    headers: await headers(),
   });
 
   if (!session) {
@@ -31,14 +33,9 @@ export default async function MyListingsCard() {
 
   let data = [];
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/listed-room`,
-      // {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`
-      //   }
-      // }
-    );
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/listed-room`, {
+      cache: "no-store",
+    });
     if (res.ok) {
       data = await res.json();
     } else {
