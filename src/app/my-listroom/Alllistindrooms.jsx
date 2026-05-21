@@ -19,18 +19,18 @@ const Alllistindrooms = ({ da, token }) => {
 
   // Delete Room
   const onDelete = async () => {
-    try {
-      let activeToken = token;
-      if (!activeToken) {
-        const tokenRes = await authClient.token();
-       activeToken = tokenRes?.data?.token;
-      }
+    // try {
+    //   let activeToken = token;
+    //   if (!activeToken) {
+    //     const tokenRes = await authClient.token();
+    //    activeToken = tokenRes?.data?.token;
+    //   }
        
       const res = await fetch(`${API_URL}/listed/${_id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${activeToken}`,
+          // Authorization: `Bearer ${activeToken}`,
         },
       });
 
@@ -43,9 +43,9 @@ const Alllistindrooms = ({ da, token }) => {
       } else {
         alert(result.message || "Delete failed");
       }
-    } catch (err) {
-      console.log("DELETE ERROR:", err);
-    }
+    // } catch (err) {
+    //   console.log("DELETE ERROR:", err);
+    // }
   };
 
   return (

@@ -1,9 +1,6 @@
 import dns from "dns";
-try {
-  dns.setServers(["8.8.8.8", "8.8.4.4"]);
-} catch (e) {
-  console.warn("Unable to set custom DNS servers:", e.message);
-}
+
+dns.setServers(["8.8.8.8", "8.8.4.4"]);
 
 
 import { Geist, Geist_Mono } from "next/font/google";

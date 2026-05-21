@@ -14,30 +14,30 @@ export default async function MyListingsCard() {
   }
 
   // Get token safely
-  let token = null;
-  try {
-    const tokenRes = await auth.api.getToken({
-      headers: await headers()
-    });
-   token = tokenRes?.token;
-    console.log(token)
-  } catch (err) {
-    console.error("Error getting JWT token:", err);
-  }
+  // let token = null;
+  // try {
+  //   const tokenRes = await auth.api.getToken({
+  //     headers: await headers()
+  //   });
+  //  token = tokenRes?.token;
+  //   console.log(token)
+  // } catch (err) {
+  //   console.error("Error getting JWT token:", err);
+  // }
 
-  if (!token) {
-    redirect("/login");
-  }
+  // if (!token) {
+  //   redirect("/login");
+  // }
 
   let data = [];
   try {
     const res = await fetch(
       `${API_URL}/listed-room`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
+      // {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`
+      //   }
+      // }
     );
     if (res.ok) {
       data = await res.json();
@@ -75,7 +75,7 @@ export default async function MyListingsCard() {
           <Alllistindrooms
             key={da._id}
             da={da}
-            token={token}
+           
           />
         ))}
 

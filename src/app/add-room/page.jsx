@@ -26,14 +26,14 @@ const page = () => {
     };
 
     try {
-      const tokenRes = await authClient.token();
-      const token = tokenRes?.data?.token;
+      // const tokenRes = await authClient.token();
+      // const token = tokenRes?.data?.token;
 
       const res1 = await fetch(`${API_URL}/add-rooms`, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
+          // Authorization: ` Bearer ${token}`
         },
         body: JSON.stringify(finalData),
       });
@@ -42,7 +42,7 @@ const page = () => {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
+          // Authorization: `Bearer ${token}`
         },
         body: JSON.stringify(finalData),
       });

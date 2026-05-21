@@ -11,9 +11,9 @@ const getBaseURL = () => {
 export const authClient = createAuthClient({
     baseURL: getBaseURL(),
 
-    plugins:[
-        jwtClient()
-    ]
+    // plugins:[
+    //     jwtClient()
+    // ]
 })
  
 export const { signIn, signUp, useSession } = authClient;

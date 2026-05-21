@@ -28,18 +28,25 @@ export const auth = betterAuth({
 
   database: mongodbAdapter(db),
 
+  account: {
+    accountLinking: {
+      enabled: true,
+      trustedProviders: ["google"]
+    }
+  },
+
   emailAndPassword: {
     enabled: true,
   },
 
-  session: {
-    cookieCache: {
-      enabled: true,
-      maxAge: 7 * 24 * 60 * 60,
-    },
-  },
+  // session: {
+  //   cookieCache: {
+  //     enabled: true,
+  //     maxAge: 7 * 24 * 60 * 60,
+  //   },
+  // },
 
-  plugins: [jwt()],
+  // plugins: [jwt()],
 
   socialProviders: {
     google: {
