@@ -22,7 +22,7 @@ const Alllistindrooms = ({ da, token }) => {
       let activeToken = token;
       if (!activeToken) {
         const tokenRes = await authClient.token();
-        activeToken = tokenRes?.data?.token;
+       activeToken = tokenRes?.data?.token;
       }
        
       const res = await fetch(`http://localhost:5000/listed/${_id}`, {

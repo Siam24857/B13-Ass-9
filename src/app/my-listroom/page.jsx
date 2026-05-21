@@ -18,7 +18,7 @@ export default async function MyListingsCard() {
     const tokenRes = await auth.api.getToken({
       headers: await headers()
     });
-   const token = tokenRes?.token;
+   token = tokenRes?.token;
     console.log(token)
   } catch (err) {
     console.error("Error getting JWT token:", err);
